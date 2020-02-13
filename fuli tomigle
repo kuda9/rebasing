@@ -1,420 +1,316 @@
-struct node
+				//Linear/single Linked List
+#include<iostream>
+#include<conio.h>
+#include<stdlib.h>
+using namespace std;
+
+typedef struct l_list
 {
-    int value;
-    struct node *next;
-};
- 
-snode* create_node(int);
-void insert_node_first();
-void insert_node_last();
-void insert_node_pos();
-void sorted_ascend();
-void delete_pos();
-void search();
-void update_val();
-void display();
-void rev_display(snode *);
- 
-typedef struct node snode;
-snode *newnode, *ptr, *prev, *temp;
-snode *first = NULL, *last = NULL;
- 
-/*
- * Main :contains menu 
- */
- 
- int main()
- {
-    int ch;
-    char ans = 'Y';
- 
-    while (ans == 'Y'||ans == 'y')
-    {
-        printf("\n---------------------------------\n");
-        printf("\nOperations on singly linked list\n");
-        printf("\n---------------------------------\n");
-        printf("\n1.Insert node at first");
-        printf("\n2.Insert node at last");
-        printf("\n3.Insert node at position");
-        printf("\n4.Sorted Linked List in Ascending Order");
-        printf("\n5.Delete Node from any Position");
-        printf("\n6.Update Node Value");
-        printf("\n7.Search Element in the linked list");
-        printf("\n8.Display List from Beginning to end");
-        printf("\n9.Display List from end using Recursion");
-        printf("\n10.Exit\n");
-        printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-        printf("\nEnter your choice");
-        scanf("%d", &ch);
- 
-        switch (ch)
-        {
-        case 1: 
-            printf("\n...Inserting node at first...\n");
-            insert_node_first();
-            break;
-        case 2: 
-            printf("\n...Inserting node at last...\n");
-            insert_node_last();
-            break;
-        case 3: 
-            printf("\n...Inserting node at position...\n");
-            insert_node_pos();
-            break;
-        case 4: 
-            printf("\n...Sorted Linked List in Ascending Order...\n");
-            sorted_ascend();
-            break;
-        case 5: 
-            printf("\n...Deleting Node from any Position...\n");
-            delete_pos();
-            break;
-        case 6: 
-            printf("\n...Updating Node Value...\n");
-            update_val();
-            break;
-        case 7: 
-            printf("\n...Searching Element in the List...\n");
-            search();
-            break;
-        case 8: 
-            printf("\n...Displaying List From Beginning to End...\n");
-            display();
-            break;
-        case 9: 
-            printf("\n...Displaying List From End using Recursion...\n");
-            rev_display(first);
-            break;
-        case 10: 
-            printf("\n...Exiting...\n");
-            return 0;
-            break;
-        default: 
-            printf("\n...Invalid Choice...\n");
-            break;
-        }
-        printf("\nYOU WANT TO CONTINUE (Y/N)");
-        scanf(" %c", &ans);
-    }
-    return 0;
- }
- 
-/*
- * Creating Node
- */
-snode* create_node(int val)
+   int info;
+   struct l_list *link;
+}node;
+node *head,*last;
+
+//empty List
+void empty_list()
 {
-    newnode = (snode *)malloc(sizeof(snode));
-    if (newnode == NULL)
-    {
-        printf("\nMemory was not allocated");
-        return 0;
-    }
-    else
-    {
-        newnode->value = val;
-        newnode->next = NULL;
-        return newnode;
-    }
+  head= NULL;
 }
- 
-/*
- * Inserting Node at First
- */
-void insert_node_first()
+//insert value funtion
+void ins_item()
 {
-    int val;
- 
-    printf("\nEnter the value for the node:");
-    scanf("%d", &val);
-    newnode = create_node(val);
-    if (first == last && first == NULL)
-    {
-        first = last = newnode;
-        first->next = NULL;
-        last->next = NULL;
-    }
-    else
-    {
-        temp = first;
-        first = newnode;
-        first->next = temp;
-    }
-    printf("\n----INSERTED----");    
+   int item;
+   node *ptr = (node*) malloc(sizeof(node));
+   cout<<"Enter the value For List: ";
+   cin>>ptr->info;
+
+	if(head==NULL)
+	{
+	   head = last = ptr;
+	}
+	else
+	{
+	  last->link=ptr;
+	  last = ptr;
+	}
+	ptr->link=NULL;
 }
- 
-/*
- * Inserting Node at Last
- */
-void insert_node_last()
+
+//Insert the value from beginig
+void ins_beg()
 {
-    int val;
- 
-    printf("\nEnter the value for the Node:");    
-    scanf("%d", &val);
-    newnode = create_node(val);
-    if (first == last && last == NULL)
-    {
-        first = last = newnode;
-        first->next = NULL;
-        last->next = NULL;
-    }
-    else
-    {
-        last->next = newnode;
-        last = newnode;
-        last->next = NULL;
-    }
- printf("\n----INSERTED----");
-}    
- 
-/*
- * Inserting Node at position
- */
-void insert_node_pos()
-{
-    int pos, val, cnt = 0, i;
- 
-    printf("\nEnter the value for the Node:");
-    scanf("%d", &val);
-    newnode = create_node(val);
-     printf("\nEnter the position ");
-    scanf("%d", &pos);
-    ptr = first;
-    while (ptr != NULL)
-    {
-        ptr = ptr->next;
-        cnt++;
-    }
-    if (pos == 1)
-    {
-        if (first == last && first == NULL)
-        {
-            first = last = newnode;
-            first->next = NULL;
-            last->next = NULL;
-        }
-        else
-        {
-            temp = first;
-            first = newnode;
-            first->next = temp;
-        }
-        printf("\nInserted");
-    }
-    else if (pos>1 && pos<=cnt)
-    {
-        ptr = first;
-        for (i = 1;i < pos;i++)
-        {
-            prev = ptr;
-            ptr = ptr->next;
-        }
-        prev->next = newnode;
-        newnode->next = ptr;
-        printf("\n----INSERTED----");
-    }
-    else
-    {
-        printf("Position is out of range");
-    }
+	node *ptr;
+	ptr=(node*)malloc(sizeof(node));
+	
+	cout<<"Enter the value to insert at 1st Possition: ";
+	cin>>ptr->info;
+	
+	if(head==NULL)
+	{
+		head=ptr;
+		ptr->link=NULL;
+	}
+	else
+	{
+		ptr->link=head;
+		head=ptr;
+	}
 }
- 
-/*
- * Sorted Linked List
- */
-void sorted_ascend()
+
+//insert at end
+void ins_end(int item)
 {
-    snode *nxt;
-    int t;
- 
-    if (first == NULL)
-    {
-        ISEMPTY;
-        printf(":No elements to sort\n");
-    }
-    else
-    {
-        for (ptr = first;ptr != NULL;ptr = ptr->next)
-        {
-            for (nxt = ptr->next;nxt != NULL;nxt = nxt->next)
-            {
-                if (ptr->value > nxt->value)
-                {    
-                    t = ptr->value;
-                    ptr->value = nxt->value;
-                    nxt->value = t;
-                }
-            }
-        }
-        printf("\n---Sorted List---");
-        for (ptr = first;ptr != NULL;ptr = ptr->next)
-        {
-            printf("%d\t", ptr->value);
-        }
-    }
+	node *ptr,*loc=head;
+	ptr=(node*)malloc(sizeof(node));
+	
+	ptr->info=item;
+	
+	if(head==NULL)
+	{
+		head=ptr;
+		ptr->link=NULL;
+	}
+	else
+	{
+			while(loc->link!=NULL)
+			{
+				loc=loc->link;
+			}
+			loc->link = ptr;
+			ptr->link=NULL;
+	}
 }
- 
-/*
- * Delete Node from specified position in a non-empty list
- */
-void delete_pos()
+
+
+//traverse in list
+void traverse()
 {
-    int pos, cnt = 0, i;
- 
-    if (first == NULL)
-    {
-        ISEMPTY;
-        printf(":No node to delete\n");
-    }
-    else
-    {
-        printf("\nEnter the position of value to be deleted:");
-        scanf(" %d", &pos);
-        ptr = first;
-        if (pos == 1)
-        {
-            first = ptr->next;
-            printf("\nElement deleted");    
-        }
-        else 
-        {
-            while (ptr != NULL)
-            {
-                ptr = ptr->next;
-                cnt = cnt + 1;
-            }
-            if (pos > 0 && pos <= cnt)    
-            {
-                ptr = first;
-                for (i = 1;i < pos;i++)
-                {
-                    prev = ptr;
-                    ptr = ptr->next;
-                }
-                prev->next = ptr->next;
-            }
-            else
-            {
-                printf("Position is out of range");
-            }
-        free(ptr);
-        printf("\nElement deleted");
-        }
-    }
+  node *ptr=head;
+
+	cout<<endl<<"************"<<endl<<"List Values Are: ";
+
+	if(head==NULL)
+	{
+		cout<<endl<<"List Is Empty:";
+	}
+	else
+	{
+		while(ptr!=NULL)
+		{
+		   cout<<endl<<ptr->info;
+		   ptr=ptr->link;
+		}
+	}
 }
-/*
- * Updating Node value in a non-empty list
- */
-void update_val()
+
+node* search(int item)
 {
-    int oldval, newval, flag = 0;
- 
-    if (first == NULL)
-    {
-        ISEMPTY;
-        printf(":No nodes in the list to update\n");
-    }
-    else
-    {
-        printf("\nEnter the value to be updated:");
-        scanf("%d", &oldval);
-        printf("\nEnter the newvalue:");    
-        scanf("%d", &newval);
-        for (ptr = first;ptr != NULL;ptr = ptr->next)
-        {
-            if (ptr->value == oldval)
-            {
-                ptr->value = newval;
-                flag = 1;
-                break;
-            }
-        }
-        if (flag == 1)
-        {
-            printf("\nUpdated Successfully");
-        }
-        else
-        {
-            printf("\nValue not found in List");
-        }
-    }    
+   node *ptr=head;
+
+     while(ptr != NULL)
+     {
+       if(item == ptr->info)
+       {
+	  return(ptr);
+       }
+       ptr=ptr->link;
+     }
+   return(NULL);
 }
- 
-/*
- * searching an element in a non-empty list
- */
-void search()
+
+//insert a node after the given value
+void ins_after(int after,int item)
 {
-    int flag = 0, key, pos = 0;
- 
-    if (first == NULL)
-    {
-        ISEMPTY;
-        printf(":No nodes in the list\n");
-    }
-    else
-    {
-        printf("\nEnter the value to search");
-        scanf("%d", &key);
-        for (ptr = first;ptr != NULL;ptr = ptr->next)
-        {
-            pos = pos + 1;
-            if (ptr->value == key)
-            {
-                flag = 1;
-                break;
-            }
-        }
-        if (flag == 1)
-        {
-            printf("\nElement %d found at %d position\n", key, pos);
-        }
-        else
-        {
-            printf("\nElement %d not found in list\n", key);
-        }
-    }    
+	node *ptr,*loc;
+	ptr=(node*)malloc(sizeof(node));
+	
+	ptr->info=item;
+	
+	loc=search(after);
+	
+		if(loc==NULL)
+		{
+			cout<<"Value Not Found ";	
+		}	
+		else if(loc->link==NULL)
+		{
+			ins_end(item);
+		}
+		else
+		{
+			ptr->link=loc->link;
+			loc->link=ptr;
+		}
+	
 }
-/*
- * Displays non-empty List from Beginning to End
- */
-void display()
+
+//Delete from Begining
+void del_beg()
 {
-    if (first == NULL)
-    {
-        ISEMPTY;
-        printf(":No nodes in the list to display\n");
-    }
-    else
-    {
-        for (ptr = first;ptr != NULL;ptr = ptr->next)
-        {    
-            printf("%d\t", ptr->value);
-        }
-    }
+	node *ptr;
+	
+	if(head==NULL)
+	{
+		cout<<"List Is Empty";
+	}
+	else
+	{
+		ptr=head;
+		head=ptr->link;
+		free(ptr);
+	}
 }
- 
-/*
- * Display non-empty list in Reverse Order
- */
-void rev_display(snode *ptr)
+
+//Delete from End
+void del_end()
 {
-    int val;
- 
-    if (ptr == NULL)
-    {
-        ISEMPTY;
-        printf(":No nodes to display\n");
-    }
-    else
-    {
-        if (ptr != NULL)
-        {
-            val = ptr->value;
-            rev_display(ptr->next);
-            printf("%d\t", val);        
-        }
- 
-    }
+	node *ptr,*loc;
+	
+	if(head==NULL)
+	{
+		cout<<"List is Empty";
+	}
+	else if(head->link==NULL)
+	{
+		free(head);
+		head=NULL;
+	}
+	else
+	{
+		loc = head;
+		while(loc->link != NULL)
+		{
+			
+			ptr=loc;
+			loc=loc->link;
+		}
+		ptr->link=NULL;
+		free(loc);
+	}
+	
+}
+
+//Delete afeter the node
+void del_after(int after)
+{
+	node *ptr,*loc;
+	
+	ptr=search(after);
+	
+	if(ptr==NULL)
+	{
+		cout<<"Macth NOt Found";
+	}
+	else if(ptr->link==NULL)
+	{
+		cout<<"Its Last Node Delete Not Possibe";
+	}
+	else
+	{
+		loc=ptr->link;
+		ptr->link=loc->link;
+		free(loc);	
+	}
+	
+}
+
+//free the space
+void free()
+{
+	node *ptr;
+		while(head!=NULL)
+		{
+			ptr=head;
+			head=ptr->link;
+			free(ptr);
+		}
+}
+int main()
+{
+int sw;
+	empty_list();
+
+	do
+	{
+	  cout<<endl<<endl<<"***************************"<<endl;
+	  cout<<"1> To insert value"<<endl<<"2> To view/traverse the Linked list"<<endl;
+	  cout<<"3> To Search Value"<<endl<<"4> Insert At Begining"<<endl;
+	  cout<<"5> Insert At END"<<endl<<"6> Insert node after value"<<endl;
+	  cout<<"7> Delete From Begining"<<endl<<"8> Delete From End"<<endl;
+	  cout<<"9> Delete After the Node"<<endl<<"10> Free Memory"<<endl;
+	  cout<<"11> EXIT";
+	  cout<<endl<<"***************************"<<endl;
+	  cout<<"press The Key: ";
+	  cin>>sw;
+	  switch(sw)
+	  {
+	    default:
+		     cout<<endl<<"Wrong Input";
+		     break;
+	    case 11:
+		     break;
+	    case 1:
+		    ins_item();
+		    break;
+	    case 2:
+		    traverse();
+		    break;
+	    case 3:
+		    int sr;
+		    node *ptr;
+		    cout<<endl<<"Enter the item for Search: ";
+		    cin>>sr;
+			ptr=search(sr);
+			cout<<endl;
+			if(ptr==NULL)
+			{
+			    cout<<"Value Not Found: "<<endl;
+			}
+			else
+			{
+			    cout<<"Match Found: "<< ptr->info;
+			}
+			break;
+		case 4:
+			ins_beg();
+			break;
+		case 5:
+			{
+				int item;
+				cout<<"Enter the Iteam Value: ";
+				cin>>item;
+				ins_end(item);
+				break;
+		    }
+		case 6:
+			{		
+				int after,item;
+				cout<<"Enter the Iteam Value: ";
+				cin>>item;
+				cout<<"Enter the node value you want to search: ";
+				cin>>after;
+				ins_after(after,item);
+				break;
+			}
+		case 7:
+			del_beg();
+			break;
+		case 8:
+			del_end();
+			break;
+		case 9:
+			{
+				int after;
+				cout<<"Enter the value for search: ";
+				cin>>after;
+				del_after(after);
+				break;
+		    }
+		case 10:
+			free();
+			break;
+
+	  }//end of switch
+	}while(sw!=11);
+
 }
